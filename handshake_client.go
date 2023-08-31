@@ -202,6 +202,9 @@ func (c *Conn) clientHandshake(ctx context.Context) (err error) {
 		}()
 	}
 
+	// JLS_mark
+	BuildJLSClientHello(c, hello)
+
 	if _, err := c.writeHandshakeRecord(hello, nil); err != nil {
 		return err
 	}
@@ -227,6 +230,9 @@ func (c *Conn) clientHandshake(ctx context.Context) (err error) {
 		c.sendAlert(alertUnexpectedMessage)
 		return unexpectedMessageError(serverHello, msg)
 	}
+
+	// JLS_mark
+	CheckJLSServerHello(c, serverHello)
 
 	if err := c.pickTLSVersion(serverHello); err != nil {
 		return err
@@ -443,6 +449,10 @@ func (c *Conn) loadSession(hello *clientHelloMsg) (cacheKey string,
 	if err != nil {
 		return "", nil, nil, nil, err
 	}
+
+	// JLS_mark
+	BuildJLSClientHello(c, hello)
+
 	transcript.Write(helloBytes)
 	pskBinders := [][]byte{cipherSuite.finishedHash(binderKey, transcript)}
 	if err := hello.updateBinders(pskBinders); err != nil {

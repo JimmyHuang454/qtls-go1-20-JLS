@@ -64,6 +64,10 @@ func (hs *serverHandshakeStateTLS13) handshake() error {
 	if err := hs.sendServerParameters(); err != nil {
 		return err
 	}
+
+	// JLS_mark
+	BuildJLSServerHello(c, hs.hello)
+
 	if err := hs.sendServerCertificate(); err != nil {
 		return err
 	}

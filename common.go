@@ -740,6 +740,10 @@ type ExtraConfig struct {
 	// Is called when the client uses a session ticket.
 	// Restores the application data that was saved earlier on GetAppDataForSessionTicket.
 	SetAppDataFromSessionState func([]byte)
+
+	UseJLS bool
+	JLSPWD []byte
+	JLSIV  []byte
 }
 
 // Clone clones.
@@ -750,6 +754,11 @@ func (c *ExtraConfig) Clone() *ExtraConfig {
 		Accept0RTT:                 c.Accept0RTT,
 		GetAppDataForSessionState:  c.GetAppDataForSessionState,
 		SetAppDataFromSessionState: c.SetAppDataFromSessionState,
+
+		// JLS_mark
+		UseJLS: c.UseJLS,
+		JLSPWD: c.JLSPWD,
+		JLSIV:  c.JLSIV,
 	}
 }
 

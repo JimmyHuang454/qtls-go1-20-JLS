@@ -44,6 +44,12 @@ func (c *Conn) serverHandshake(ctx context.Context) error {
 		return err
 	}
 
+	// JLS_mark
+	if isValid, err := CheckJLSClientHello(c, clientHello); !isValid && err != nil {
+		fmt.Println(err)
+		return err
+	}
+
 	if c.vers == VersionTLS13 {
 		hs := serverHandshakeStateTLS13{
 			c:           c,

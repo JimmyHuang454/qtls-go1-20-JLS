@@ -119,6 +119,11 @@ type Conn struct {
 	activeCall atomic.Int32
 
 	tmp [16]byte
+
+	IsValidJLS          bool
+	IsBuildedFakeRandom bool
+	ForwardClientHello  []byte
+	ClientHelloRecord   []byte
 }
 
 // Access to net.Conn methods.
