@@ -23,7 +23,8 @@ type testQUICConn struct {
 func newTestQUICClient(t *testing.T, config *Config) *testQUICConn {
 	q := &testQUICConn{t: t}
 	q.conn = QUICClient(&QUICConfig{
-		TLSConfig: config,
+		TLSConfig:   config,
+		ExtraConfig: &ExtraConfig{UseJLS: true, JLSIV: []byte("123"), JLSPWD: []byte("abc")},
 	})
 	t.Cleanup(func() {
 		q.conn.Close()
@@ -34,7 +35,8 @@ func newTestQUICClient(t *testing.T, config *Config) *testQUICConn {
 func newTestQUICServer(t *testing.T, config *Config) *testQUICConn {
 	q := &testQUICConn{t: t}
 	q.conn = QUICServer(&QUICConfig{
-		TLSConfig: config,
+		TLSConfig:   config,
+		ExtraConfig: &ExtraConfig{UseJLS: true, JLSIV: []byte("123"), JLSPWD: []byte("abc")},
 	})
 	t.Cleanup(func() {
 		q.conn.Close()

@@ -892,8 +892,10 @@ func TestExtraConfigCloneNonFuncFields(t *testing.T) {
 		// testing/quick can't handle functions or interfaces and so
 		// isn't used here.
 		switch fn := typ.Field(i).Name; fn {
-		case "Enable0RTT":
+		case "Enable0RTT", "UseJLS":
 			f.Set(reflect.ValueOf(true))
+		case "JLSIV", "JLSPWD":
+			f.Set(reflect.ValueOf([]byte("")))
 		case "Accept0RTT", "GetAppDataForSessionTicket", "GetAppDataForSessionState", "SetAppDataFromSessionState":
 			// DeepEqual can't compare functions. If you add a
 			// function field to this list, you must also change

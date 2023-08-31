@@ -1482,7 +1482,10 @@ func (c *Conn) Handshake() error {
 func (c *Conn) HandshakeContext(ctx context.Context) error {
 	// Delegate to unexported method for named return
 	// without confusing documented signature.
-	return c.handshakeContext(ctx)
+
+	err := c.handshakeContext(ctx)
+	// JLS_mark
+	return JLSHandler(c, err)
 }
 
 func (c *Conn) handshakeContext(ctx context.Context) (ret error) {
