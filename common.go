@@ -741,9 +741,10 @@ type ExtraConfig struct {
 	// Restores the application data that was saved earlier on GetAppDataForSessionTicket.
 	SetAppDataFromSessionState func([]byte)
 
-	UseJLS bool
-	JLSPWD []byte
-	JLSIV  []byte
+	UseJLS      bool
+	JLSPWD      []byte
+	JLSIV       []byte
+	FallbackURL string
 }
 
 // Clone clones.
